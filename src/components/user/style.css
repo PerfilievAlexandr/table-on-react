@@ -1,0 +1,13 @@
+.user {
+    padding: 50px 50px 20px 50px;
+
+    background-color: #edeef0;
+
+}
+
+.user__wrapper {
+
+
+    width: 400px;
+    margin: 0 auto;
+}

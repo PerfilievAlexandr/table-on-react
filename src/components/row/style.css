@@ -1,0 +1,10 @@
+.row td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.row:hover {
+    opacity: 0.5;
+
+    cursor: pointer;
+}
