@@ -34,7 +34,6 @@ class Table extends Component {
     render() {
 
         const {data, loading, columns} = this.props;
-
         const rows = data
             ?
             data.map((row) => {
@@ -48,12 +47,12 @@ class Table extends Component {
             :
             null;
 
-        const rowHead = columns
-            ?
-            columns.map((column) => Object.values(column)[0])
-            :
-            null;
-
+        // const rowHead = columns
+        //     ?
+            
+        //     columns.map((column) => Object.values(column)[0])
+        //     :
+        //     null;
 
         if (loading) return <Loader/>;
 
@@ -61,22 +60,22 @@ class Table extends Component {
             <Conteiner>
                 <TableArea>
                     <thead>
-                    <DragDropContext
+                    {/* <DragDropContext
                         onDragEnd={this.onDragEnd}
                     >
                         <Droppable droppableId={0}>
-                            {(provided) => (
+                            {(provided) => ( */}
                                 <HeaderRow
-                                    row={rowHead}
-                                    ref={provided.innerRef}
-                                    {...provided.droppableProps}
-                                    {provided.placeholder}
+                                    row={columns}
+                                    //ref={provided.innerRef}
+                                    //{...provided.droppableProps}
+                                    //{provided.placeholder}
                                 />
-                            )}
+                            {/* )}
 
                         </Droppable>
                         {rows}
-                    </DragDropContext>
+                    </DragDropContext> */}
                     </thead>
                 </TableArea>
             </Conteiner>

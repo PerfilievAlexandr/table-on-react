@@ -5,11 +5,13 @@ class HeaderRow extends Component {
 
     render() {
         const {row} = this.props;
+        console.log(row, 'row')
         const rowFromCells = row ?
             row.map((cell, index) => {
-                return <Cell
+                
+                return  <Cell
                     key={index}
-                    data={cell}
+                    data={Object.values(cell)}
                 />
             })
             :

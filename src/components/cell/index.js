@@ -12,8 +12,9 @@ class Cell extends Component {
     render() {
 
         const {data} = this.props;
+        console.log(data, 'td')
 
-        return <Conteiner>{data}</Conteiner>;
+        return <Conteiner>{data[0].content}</Conteiner>;
     };
 }
 
