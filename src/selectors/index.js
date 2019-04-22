@@ -10,6 +10,10 @@ export const loadingData = (state) => state.rows.loading;
 
 export const searchValue = (state) => state.search;
 
+export const columnNamesObject = (state) => state.rows.columns;
+
+export const columnNamesArr = createSelector(columnNamesObject, (column) => ( column ? Object.values(column) : null));
+
 export const foundRows = createSelector(allRows, searchValue, (rows, search) => {
     if (search) {
         return rows.filter((row) => {
@@ -17,7 +21,6 @@ export const foundRows = createSelector(allRows, searchValue, (rows, search) => 
         });
     }
     return rows;
-
 });
 
 export const filteredRows = createSelector(foundRows, columnName, sortOrder, (rows, name, sortOrder) => {

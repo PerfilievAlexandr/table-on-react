@@ -1,72 +1,98 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getData, selectColumn, sortRows} from '../../action-creators'
-import {filteredRows, sortOrder, loadingData} from '../../selectors';
+import {filteredRows, sortOrder, loadingData, columnNamesArr} from '../../selectors';
 import Row from '../row';
+import HeaderRow from '../headerRow';
 import Loader from '../loader';
 import {INCREASE, DECREASE} from '../../constants';
+import styled from 'styled-components';
+import {DragDropContext} from 'react-beautiful-dnd';
+import {Droppable} from 'react-beautiful-dnd'
 import './style.css';
+
+
+const Conteiner = styled.section`
+      padding-top: 50px;
+      background-color: #edeef0;
+`;
+
+const TableArea = styled.table`
+    margin: 0 auto;
+    width: 70%;
+
+    box-sizing: border-box;
+    border: 1px solid #777777;
+    border-collapse: collapse;
+    background-color: white;
+
+    color: #777777;
+`;
 
 class Table extends Component {
 
     render() {
-        const {data, loading} = this.props;
-        const rows = data.map((row) => {
-            return (
-                <Row
-                    key={row.id + Math.random()}
-                    row={row}
-                />
-            )
-        });
+
+        const {data, loading, columns} = this.props;
+
+        const rows = data
+            ?
+            data.map((row) => {
+                return (
+                    <Row
+                        key={row.id + Math.random()}
+                        row={Object.values(row)}
+                    />
+                )
+            })
+            :
+            null;
+
+        const rowHead = columns
+            ?
+            columns.map((column) => Object.values(column)[0])
+            :
+            null;
+
 
         if (loading) return <Loader/>;
 
         return (
-            <section className='table'>
-                <table className='table__area'>
+            <Conteiner>
+                <TableArea>
                     <thead>
-                    <tr onClick = {this.onHandleClickSort}>
-                        <th><button
-                            value = 'id'
-                            className='table__btn'
-                            onClick={this.onActive}
-                        >ID</button>
-                        </th>
-                        <th><button
-                            value = 'firstName'
-                            className='table__btn'
-                        >First name</button>
-                        </th>
-                        <th><button
-                            value = 'lastName'
-                            className='table__btn'
-                        >Last name</button>
-                        </th>
-                        <th><button
-                            value = 'email'
-                            className='table__btn'
-                        >Email</button>
-                        </th>
-                        <th><button
-                            value = 'phone'
-                            className='table__btn'
-                        >Phone</button>
-                        </th>
-                    </tr>
-                    {rows}
+                    <DragDropContext
+                        onDragEnd={this.onDragEnd}
+                    >
+                        <Droppable droppableId={0}>
+                            {(provided) => (
+                                <HeaderRow
+                                    row={rowHead}
+                                    ref={provided.innerRef}
+                                    {...provided.droppableProps}
+                                    {provided.placeholder}
+                                />
+                            )}
+
+                        </Droppable>
+                        {rows}
+                    </DragDropContext>
                     </thead>
-                </table>
-            </section>
+                </TableArea>
+            </Conteiner>
         );
     };
 
-    onHandleClickSort = (evt) => {
-        const {selectColumn, data, sortRows, sortOrder} = this.props;
-        let sortOrderColumn = sortOrder !== INCREASE ? INCREASE : DECREASE;
+    // onHandleClickSort = (evt) => {
+    //     const {selectColumn, data, sortRows, sortOrder} = this.props;
+    //     let sortOrderColumn = sortOrder !== INCREASE ? INCREASE : DECREASE;
+    //
+    //     selectColumn(evt.target.value, sortOrderColumn);
+    //     sortRows(data);
+    // };
 
-        selectColumn(evt.target.value, sortOrderColumn);
-        sortRows(data);
+    onDragEnd = () => {
+
     };
 
     componentDidMount() {
@@ -83,6 +109,7 @@ export default connect(
         data: filteredRows(store),
         sortOrder: sortOrder(store),
         loading: loadingData(store),
+        columns: columnNamesArr(store)
     }),
     {getData, selectColumn, sortRows}
 )(Table);

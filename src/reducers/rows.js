@@ -13,7 +13,8 @@ const initialState = {
     sort: {
         direction: null,
         columnName: ''
-    }
+    },
+    columns: null,
 };
 
 export default (rows = initialState, action) => {
@@ -30,11 +31,18 @@ export default (rows = initialState, action) => {
             };
 
         case GET_DATA + SUCCESS:
+            const columns = Object.keys(payload[0]);
+
+            const columnsObjectApiarence = columns.map((item) => {
+                let id = Math.floor(Math.random() * 10000);
+                return {[id]: {id: id, content: item}}
+            });
             return {
                 ...rows,
                 rowsList: payload,
                 loading: false,
-                loaded: true
+                loaded: true,
+                columns: columnsObjectApiarence
             };
 
         case SELECT_COLUMN:
