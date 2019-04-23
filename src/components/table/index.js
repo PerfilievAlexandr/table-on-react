@@ -5,7 +5,6 @@ import {filteredRows, sortOrder, loadingData, columnNamesArr} from '../../select
 import Row from '../row';
 import HeaderRow from '../headerRow';
 import Loader from '../loader';
-import {INCREASE, DECREASE} from '../../constants';
 import styled from 'styled-components';
 import {DragDropContext} from 'react-beautiful-dnd';
 import {Droppable} from 'react-beautiful-dnd'
@@ -34,6 +33,7 @@ class Table extends Component {
     render() {
 
         const {data, loading, columns} = this.props;
+
         const rows = data
             ?
             data.map((row) => {
@@ -46,13 +46,6 @@ class Table extends Component {
             })
             :
             null;
-
-        // const rowHead = columns
-        //     ?
-            
-        //     columns.map((column) => Object.values(column)[0])
-        //     :
-        //     null;
 
         if (loading) return <Loader/>;
 
@@ -73,22 +66,16 @@ class Table extends Component {
                                 />
                             {/* )}
 
-                        </Droppable>
+                        </Droppable> */}
                         {rows}
-                    </DragDropContext> */}
+                    {/* </DragDropContext> */}
                     </thead>
                 </TableArea>
             </Conteiner>
         );
     };
 
-    // onHandleClickSort = (evt) => {
-    //     const {selectColumn, data, sortRows, sortOrder} = this.props;
-    //     let sortOrderColumn = sortOrder !== INCREASE ? INCREASE : DECREASE;
-    //
-    //     selectColumn(evt.target.value, sortOrderColumn);
-    //     sortRows(data);
-    // };
+
 
     onDragEnd = () => {
 

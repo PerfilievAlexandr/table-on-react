@@ -12,7 +12,9 @@ export const searchValue = (state) => state.search;
 
 export const columnNamesObject = (state) => state.rows.columns;
 
-export const columnNamesArr = createSelector(columnNamesObject, (column) => ( column ? Object.values(column) : null));
+export const columnNamesArr = createSelector(columnNamesObject, (column) => { 
+    return column ? column.map((item) => Object.values(item)[0]) : null
+});
 
 export const foundRows = createSelector(allRows, searchValue, (rows, search) => {
     if (search) {

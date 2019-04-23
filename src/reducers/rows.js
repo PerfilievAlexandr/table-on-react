@@ -32,17 +32,24 @@ export default (rows = initialState, action) => {
 
         case GET_DATA + SUCCESS:
             const columns = Object.keys(payload[0]);
+            console.log(columns, 'reduser');
 
-            const columnsObjectApiarence = columns.map((item) => {
+            const columnsObjViu = columns.map((item) => {
                 let id = Math.floor(Math.random() * 10000);
-                return {[id]: {id: id, content: item}}
-            });
+                return {[item]: {id: id, content: item}}
+            })
+
+            // const columnsObjViu = columns.reduce((acc, curr) => {
+            //     let id = Math.floor(Math.random() * 10000);
+            //     return {...acc, [id]: {id: id, content: curr}}
+            // }, {})
+
             return {
                 ...rows,
                 rowsList: payload,
                 loading: false,
                 loaded: true,
-                columns: columnsObjectApiarence
+                columns: columnsObjViu
             };
 
         case SELECT_COLUMN:

@@ -6,8 +6,10 @@ import './style.css';
 class Row extends Component {
 
     render() {
+
         const {row} = this.props;
-        const rowFromCells = row.map((cell, index) => {
+        
+        const rowFromCells =  row.map((cell, index) => {
             return (typeof cell !== 'object')
                 ?
                 <Cell

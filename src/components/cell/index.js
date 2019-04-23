@@ -10,11 +10,8 @@ const Conteiner = styled.td`
 class Cell extends Component {
 
     render() {
-
         const {data} = this.props;
-        console.log(data, 'td')
-
-        return <Conteiner>{data[0].content}</Conteiner>;
+        return <Conteiner>{data}</Conteiner>;
     };
 }
 
