@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {getData, selectColumn, sortRows} from '../../action-creators'
-import {filteredRows, sortOrder, loadingData, columnNamesArr} from '../../selectors';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getData, selectColumn, sortRows } from '../../action-creators'
+import { filteredRows, sortOrder, loadingData, columnNames } from '../../selectors';
 import Row from '../row';
 import HeaderRow from '../headerRow';
 import Loader from '../loader';
 import styled from 'styled-components';
-import {DragDropContext} from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import './style.css';
 
 
@@ -15,7 +15,7 @@ const Conteiner = styled.section`
       background-color: #edeef0;
 `;
 
-const TableArea = styled.table`
+const TableArea = styled.div`
     margin: 0 auto;
     width: 70%;
 
@@ -31,7 +31,7 @@ class Table extends Component {
 
     render() {
 
-        const {data, loading, columns} = this.props;
+        const { data, loading, columns } = this.props;
 
         const rows = data
             ?
@@ -46,24 +46,19 @@ class Table extends Component {
             :
             null;
 
-        if (loading) return <Loader/>;
+        if (loading) return <Loader />;
 
         return (
             <Conteiner>
                 <TableArea>
-                    <thead>
                     <DragDropContext
                         onDragEnd={this.onDragEnd}
                     >
-
-                                <HeaderRow
-                                    row={columns}
-                                />
-            
-                        
+                        <HeaderRow
+                            row={columns}
+                        />
                         {/* {rows} */}
-                        </DragDropContext>
-                    </thead>
+                    </DragDropContext>
                 </TableArea>
             </Conteiner>
         );
@@ -76,7 +71,7 @@ class Table extends Component {
     };
 
     componentDidMount() {
-        const {getData} = this.props;
+        const { getData } = this.props;
 
         getData();
     };
@@ -89,7 +84,7 @@ export default connect(
         data: filteredRows(store),
         sortOrder: sortOrder(store),
         loading: loadingData(store),
-        columns: columnNamesArr(store)
+        columns: columnNames(store)
     }),
-    {getData, selectColumn, sortRows}
+    { getData, selectColumn, sortRows }
 )(Table);

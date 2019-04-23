@@ -31,20 +31,20 @@ export default (rows = initialState, action) => {
             };
 
         case GET_DATA + SUCCESS:
-            const columns = Object.keys(payload[0]);
-            console.log(columns, 'reduser');
-
-            const columnsObjViu = columns.map((item) => {
-                let id = Math.floor(Math.random() * 10000);
-                return {[item]: {id: id, content: item}}
-            })
+            const copyPayload = payload;
+            const data = copyPayload.map((item) => {
+                delete  item.address;
+                delete item.description;
+                return Object.values(item);
+            });
+            const columnNames = Object.keys(payload[0]);
 
             return {
                 ...rows,
-                rowsList: payload,
+                rowsList: data,
                 loading: false,
                 loaded: true,
-                columns: columnsObjViu
+                columns: columnNames
             };
 
         case SELECT_COLUMN:
