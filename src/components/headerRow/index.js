@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {getData, selectColumn, sortRows} from '../../action-creators';
 import {filteredRows, sortOrder} from '../../selectors';
 import {INCREASE, DECREASE} from '../../constants';
+import {Droppable} from 'react-beautiful-dnd';
 
 class HeaderRow extends Component {
 
@@ -16,14 +17,27 @@ class HeaderRow extends Component {
                 return  <Cell
                     key={index}
                     data={cell.content}
+                    index={index}
+                    id={cell.id}
                 />
             })
             :
             null;
 
-        return <tr
-            onClick={this.onHandleClickSort}
-        >{rowFromCells}</tr>;
+        return (
+            <Droppable droppableId={'droppable'} direction='horizontal'>
+                            {(provided) => (
+                                <tr
+                                    onClick={this.onHandleClickSort}
+                                    ref={provided.innerRef}
+                                    {...provided.droppableProps}
+                                >
+                                    {rowFromCells}
+                                    {provided.placeholder}    
+                                </tr>
+                            )}
+            </Droppable>
+        )
     };
 
         onHandleClickSort = (evt) => {

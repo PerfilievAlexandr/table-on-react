@@ -10,8 +10,18 @@ const Conteiner = styled.td`
 class Cell extends Component {
 
     render() {
-        const {data} = this.props;
-        return <Conteiner>{data}</Conteiner>;
+        const {data, index, id} = this.props;
+        return (
+            <Draggable key={id} draggableId={id} index={index}>
+                {(provided) => (
+                    <Conteiner 
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                    >{data}</Conteiner>
+                )}
+            </Draggable>
+        )
     };
 }
 

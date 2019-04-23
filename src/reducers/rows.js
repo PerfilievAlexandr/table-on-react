@@ -39,11 +39,6 @@ export default (rows = initialState, action) => {
                 return {[item]: {id: id, content: item}}
             })
 
-            // const columnsObjViu = columns.reduce((acc, curr) => {
-            //     let id = Math.floor(Math.random() * 10000);
-            //     return {...acc, [id]: {id: id, content: curr}}
-            // }, {})
-
             return {
                 ...rows,
                 rowsList: payload,

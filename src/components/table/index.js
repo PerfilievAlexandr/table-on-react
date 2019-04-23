@@ -7,7 +7,6 @@ import HeaderRow from '../headerRow';
 import Loader from '../loader';
 import styled from 'styled-components';
 import {DragDropContext} from 'react-beautiful-dnd';
-import {Droppable} from 'react-beautiful-dnd'
 import './style.css';
 
 
@@ -53,22 +52,17 @@ class Table extends Component {
             <Conteiner>
                 <TableArea>
                     <thead>
-                    {/* <DragDropContext
+                    <DragDropContext
                         onDragEnd={this.onDragEnd}
                     >
-                        <Droppable droppableId={0}>
-                            {(provided) => ( */}
+
                                 <HeaderRow
                                     row={columns}
-                                    //ref={provided.innerRef}
-                                    //{...provided.droppableProps}
-                                    //{provided.placeholder}
                                 />
-                            {/* )}
-
-                        </Droppable> */}
-                        {rows}
-                    {/* </DragDropContext> */}
+            
+                        
+                        {/* {rows} */}
+                        </DragDropContext>
                     </thead>
                 </TableArea>
             </Conteiner>
