@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getData, selectColumn, sortRows } from '../../action-creators'
-import { filteredRows, sortOrder, loadingData, columnNames } from '../../selectors';
-import Row from '../row';
-import HeaderRow from '../headerRow';
+import { getData, selectColumn, sortRows, dragColumn } from '../../action-creators'
+import { arrFilteredRows, sortOrder, loadingData, arrColumnNames } from '../../selectors';
+import Column from '../column';
 import Loader from '../loader';
 import styled from 'styled-components';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import './style.css';
 
 
@@ -16,6 +15,8 @@ const Conteiner = styled.section`
 `;
 
 const TableArea = styled.div`
+    display: flex;
+
     margin: 0 auto;
     width: 70%;
 
@@ -31,15 +32,21 @@ class Table extends Component {
 
     render() {
 
-        const { data, loading, columns } = this.props;
+        const { data, loading, columnsName } = this.props;
 
-        const rows = data
+        const columns = columnsName
             ?
-            data.map((row) => {
+            columnsName.map((column, index) => {
+                const columnData = data.map((item) => item[index])
                 return (
-                    <Row
-                        key={row.id + Math.random()}
-                        row={Object.values(row)}
+                    <Column
+                        key={index}
+                        columnName={column}
+                        index={index}
+                        columnData={columnData}
+                        idForColumn={index.toString()}
+                        keyForColumn={index}
+                        onClick={this.onHandleClickSort}
                     />
                 )
             })
@@ -50,25 +57,50 @@ class Table extends Component {
 
         return (
             <Conteiner>
-                <TableArea>
-                    <DragDropContext
-                        onDragEnd={this.onDragEnd}
-                    >
-                        <HeaderRow
-                            row={columns}
-                        />
-                        {/* {rows} */}
-                    </DragDropContext>
-                </TableArea>
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                    <Droppable droppableId='droppableId' direction='horizontal'>
+                        {(provided) => (
+                            <TableArea
+                                ref={provided.innerRef}
+                            >
+                                {columns}
+                                {provided.placeholder}
+                            </TableArea>
+                        )}
+                    </Droppable>
+                </DragDropContext>
             </Conteiner>
         );
     };
 
 
 
-    onDragEnd = () => {
+    onDragEnd = (result) => {
+        console.log(result);
+        const {destination, source, draggableId} = result;
+        const {columnsName, dragColumn, data} = this.props;
 
+        if (!destination) return;
+
+        if (destination.draggableId === source.draggableId && destination.index === source.index) return; 
+
+        const newColumnHeaders = [...columnsName];
+        const draggableColumn = newColumnHeaders[draggableId];
+        newColumnHeaders.splice(source.index, 1);
+        newColumnHeaders.splice(destination.index, 0, draggableColumn);
+
+        const newData = [...data].map((row) => {
+            const draggableColumn = row[draggableId];
+            row.splice(source.index, 1);
+            row.splice(destination.index, 0, draggableColumn);
+            return row;
+        });
+
+
+        dragColumn(newColumnHeaders);
     };
+
+
 
     componentDidMount() {
         const { getData } = this.props;
@@ -81,10 +113,10 @@ class Table extends Component {
 
 export default connect(
     (store) => ({
-        data: filteredRows(store),
+        data: arrFilteredRows(store),
         sortOrder: sortOrder(store),
         loading: loadingData(store),
-        columns: columnNames(store)
+        columnsName: arrColumnNames(store),
     }),
-    { getData, selectColumn, sortRows }
+    { getData, selectColumn, sortRows, dragColumn }
 )(Table);

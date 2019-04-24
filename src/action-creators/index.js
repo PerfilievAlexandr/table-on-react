@@ -6,6 +6,7 @@ import {
     SEARCH,
     START,
     SUCCESS,
+    DRAGG_COLUMN
 } from '../constants';
 
 export function getData() {
@@ -18,7 +19,6 @@ export function getData() {
 
         axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
             .then((rows) => {
-                console.log(rows);
                 dispatch({
                     type: GET_DATA + SUCCESS,
                     payload: rows.data
@@ -52,6 +52,13 @@ export function findRows(searchValue) {
     return {
         type: SEARCH,
         payload: searchValue
+    }
+}
+
+export function dragColumn(columns) {
+    return {
+        type: DRAGG_COLUMN,
+        payload: columns
     }
 }
 

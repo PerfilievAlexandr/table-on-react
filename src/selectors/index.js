@@ -12,6 +12,10 @@ export const searchValue = (state) => state.search;
 
 export const columnNames = (state) => state.rows.columns;
 
+export const arrColumnNames = createSelector(columnNames, (column) => {
+    return column ? column.map(item => Object.values(item)) : null;
+}) 
+
 export const foundRows = createSelector(allRows, searchValue, (rows, search) => {
     if (search) {
         return rows.filter((row) => {
@@ -32,3 +36,7 @@ export const filteredRows = createSelector(foundRows, columnName, sortOrder, (ro
         return b[name] - a[name];
     })
 });
+
+export const arrFilteredRows = createSelector(filteredRows, (row) => {
+    return row.map(cell => Object.values(cell));
+})

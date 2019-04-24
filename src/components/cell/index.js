@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import {Draggable} from 'react-beautiful-dnd';
 
-const Conteiner = styled.td`
+
+const Conteiner = styled.div`
     border: 1px solid black;
     padding: 15px;
 `;
@@ -10,18 +10,8 @@ const Conteiner = styled.td`
 class Cell extends Component {
 
     render() {
-        const {data, index, id} = this.props;
-        return (
-            <Draggable key={id} draggableId={id} index={index}>
-                {(provided) => (
-                    <Conteiner 
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                    >{data}</Conteiner>
-                )}
-            </Draggable>
-        )
+        const { data } = this.props;
+        return <Conteiner>{data}</Conteiner>
     };
 }
 

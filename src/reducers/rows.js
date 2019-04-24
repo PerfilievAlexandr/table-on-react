@@ -4,6 +4,7 @@ import {
     SORT_COLUMN,
     START,
     SUCCESS,
+    DRAGG_COLUMN,
 } from '../constants';
 
 const initialState = {
@@ -19,10 +20,10 @@ const initialState = {
 
 export default (rows = initialState, action) => {
 
-    const {payload, type} = action;
+    const { payload, type } = action;
 
     switch (type) {
-        
+
         case GET_DATA + START:
             return {
                 ...rows,
@@ -31,17 +32,18 @@ export default (rows = initialState, action) => {
             };
 
         case GET_DATA + SUCCESS:
-            const copyPayload = payload;
-            const data = copyPayload.map((item) => {
-                delete  item.address;
+
+            const newArr = payload.map((item) => {
+                delete item.address;
                 delete item.description;
-                return Object.values(item);
+                return item;
             });
-            const columnNames = Object.keys(payload[0]);
+
+            const columnNames = Object.keys(newArr[0]).map(item => ({ [item]: item }));
 
             return {
                 ...rows,
-                rowsList: data,
+                rowsList: newArr,
                 loading: false,
                 loaded: true,
                 columns: columnNames
@@ -51,17 +53,24 @@ export default (rows = initialState, action) => {
             return {
                 ...rows,
                 sort: {
-                   ...rows.sort,
-                   columnName: payload.name,
-                   direction: payload.sort 
-                }   
+                    ...rows.sort,
+                    columnName: payload.name,
+                    direction: payload.sort
+                }
             };
 
         case SORT_COLUMN:
-            
+
             return {
                 ...rows,
                 rowsList: payload
+            };
+
+        case DRAGG_COLUMN:
+
+            return {
+                ...rows,
+                columns: payload
             };
         default:
             return rows
