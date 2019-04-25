@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getData, selectColumn, sortRows, dragColumn } from '../../action-creators'
-import { arrFilteredRows, sortOrder, loadingData, arrColumnNames } from '../../selectors';
+import { arrFilteredRows, loadingData, arrColumnNames } from '../../selectors';
 import Column from '../column';
 import Loader from '../loader';
 import styled from 'styled-components';
@@ -76,7 +76,6 @@ class Table extends Component {
 
 
     onDragEnd = (result) => {
-        console.log(result);
         const {destination, source, draggableId} = result;
         const {columnsName, dragColumn, data} = this.props;
 
@@ -93,11 +92,14 @@ class Table extends Component {
             const draggableColumn = row[draggableId];
             row.splice(source.index, 1);
             row.splice(destination.index, 0, draggableColumn);
-            return row;
+            const newRow = row.reduce((acc, curr, index) => ({...acc, [newColumnHeaders[index]]: curr}), {})
+            return {...newRow};
         });
 
+        console.log(newData, newColumnHeaders, 'newData')
 
-        dragColumn(newColumnHeaders);
+
+        dragColumn(newColumnHeaders, newData);
     };
 
 
@@ -114,7 +116,6 @@ class Table extends Component {
 export default connect(
     (store) => ({
         data: arrFilteredRows(store),
-        sortOrder: sortOrder(store),
         loading: loadingData(store),
         columnsName: arrColumnNames(store),
     }),

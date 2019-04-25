@@ -55,10 +55,13 @@ export function findRows(searchValue) {
     }
 }
 
-export function dragColumn(columns) {
+export function dragColumn(columns, newData) {
     return {
         type: DRAGG_COLUMN,
-        payload: columns
+        payload: {
+            columns,
+            newData
+        }
     }
 }
 

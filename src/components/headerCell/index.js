@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { selectColumn, sortRows } from '../../action-creators';
 import { connect } from 'react-redux';
-import {INCREASE, DECREASE} from '../../action-creators'
+import {INCREASE, DECREASE} from '../../constants';
+import { sortOrder, filteredRows } from '../../selectors';
+
 
 
 
@@ -19,9 +21,9 @@ const Conteiner = styled.div`
 class HeaderCell extends Component {
 
     render() {
+
         const { data } = this.props;
 
-        console.log(data[0], 'headerCell')
         return (
             <Conteiner
                 onClick={this.onHandleClickSort}
@@ -32,19 +34,21 @@ class HeaderCell extends Component {
     };
 
     onHandleClickSort = (evt) => {
-        console.log(evt.target.textContent)
-        const { selectColumn, data, sortRows, sortOrder } = this.props;
+        const { selectColumn, sortedRows, sortRows, sortOrder } = this.props;
         let sortOrderColumn = sortOrder !== INCREASE ? INCREASE : DECREASE;
+        const newRows = sortedRows.slice();
 
 
         selectColumn(evt.target.textContent, sortOrderColumn);
-        sortRows(data);
+        sortRows(newRows);
     };
-
 }
 
 
 export default connect(
-    null,
+    (store) => ({
+        sortOrder: sortOrder(store),
+        sortedRows: filteredRows(store),
+    }),
     { selectColumn, sortRows }
 )(HeaderCell);

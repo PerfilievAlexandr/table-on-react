@@ -17,6 +17,7 @@ class Column extends Component {
     render() {
 
         const { columnName, columnData, keyForColumn, idForColumn, index } = this.props;
+
         const data = columnData.map((item, index) => (
             <Cell
                 data={item}
