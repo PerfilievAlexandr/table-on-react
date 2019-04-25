@@ -60,14 +60,12 @@ export default (rows = initialState, action) => {
             };
 
         case SORT_COLUMN:
-        console.log(payload, 'sort')
             return {
                 ...rows,
                 rowsList: payload
             };
 
         case DRAGG_COLUMN:
-            console.log(payload, 'test')
             return {
                 ...rows,
                 rowsList: payload.newData,

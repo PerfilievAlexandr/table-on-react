@@ -5,10 +5,10 @@ import HeaderCell from '../headerCell';
 import { Draggable } from 'react-beautiful-dnd';
 
 const Conteiner = styled.div`
+    box-sizing: border-box;
+
     width: 100%;  
-    padding-top: 50px;
-    background-color: #edeef0;
-    border: 0.5px solid black;
+    background-color: #edeef0
 `;
 
 

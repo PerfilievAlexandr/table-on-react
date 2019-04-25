@@ -6,8 +6,6 @@ import Column from '../column';
 import Loader from '../loader';
 import styled from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import './style.css';
-
 
 const Conteiner = styled.section`
       padding-top: 50px;
@@ -95,9 +93,6 @@ class Table extends Component {
             const newRow = row.reduce((acc, curr, index) => ({...acc, [newColumnHeaders[index]]: curr}), {})
             return {...newRow};
         });
-
-        console.log(newData, newColumnHeaders, 'newData')
-
 
         dragColumn(newColumnHeaders, newData);
     };
