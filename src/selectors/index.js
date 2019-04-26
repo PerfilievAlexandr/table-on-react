@@ -4,7 +4,7 @@ export const columnName = (state) => state.rows.sort.columnName;
 
 export const sortOrder = (state) => state.rows.sort.direction;
 
-export const allRows = (state) => state.rows.rowsList;
+export const allRowsObj = (state) => state.rows.rowsList;
 
 export const loadingData = (state) => state.rows.loading;
 
@@ -12,9 +12,11 @@ export const searchValue = (state) => state.search;
 
 export const columnNames = (state) => state.rows.columns;
 
+export const allRows = createSelector(allRowsObj, (row) => row ? Object.values(row) : null);
+
 export const arrColumnNames = createSelector(columnNames, (column) => {
     return column ? column.map(item => Object.values(item)) : null;
-}) 
+});
 
 export const foundRows = createSelector(allRows, searchValue, (rows, search) => {
     if (search) {
@@ -39,4 +41,4 @@ export const filteredRows = createSelector(foundRows, columnName, sortOrder, (ro
 
 export const arrFilteredRows = createSelector(filteredRows, (row) => {
     return row.map(cell => Object.values(cell));
-})
+});

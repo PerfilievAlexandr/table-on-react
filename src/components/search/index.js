@@ -16,11 +16,13 @@ class Search extends Component {
                     placeholder='Поиск'
                     onChange={this.onHandleChange}
                     value={this.state.searchValue}
+                    onKeyDown={this.onHandleKeyDown}
                 />
                 <button
                     className='search__button  btn'
                     onClick={this.onHandleClick}
-                >Найти</button>
+                >Найти
+                </button>
             </div>
         )
     };
@@ -31,10 +33,20 @@ class Search extends Component {
         })
     };
 
-    onHandleClick = () => {
+    onHandleClick = (evt) => {
         const {findRows} = this.props;
+
+        console.log(evt);
         findRows(this.state.searchValue.toLowerCase());
     };
+
+    onHandleKeyDown = (evt) => {
+        const {findRows} = this.props;
+
+        if (evt.key === 'Enter') {
+            findRows(this.state.searchValue.toLowerCase());
+        }
+    }
 }
 
 

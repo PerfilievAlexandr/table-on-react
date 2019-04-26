@@ -41,9 +41,11 @@ export default (rows = initialState, action) => {
 
             const columnNames = Object.keys(newArr[0]).map(item => ({ [item]: item }));
 
+            const objectViuNewArr = newArr.reduce((acc, curr) => ({...acc, [curr.id]: curr}), {});
+
             return {
                 ...rows,
-                rowsList: newArr,
+                rowsList: objectViuNewArr,
                 loading: false,
                 loaded: true,
                 columns: columnNames
