@@ -24,7 +24,7 @@ const Conteiner = styled.div`
         opacity: 0.5;
     }
 
-    background-color: ${props => {console.log(props)}};
+    background-color: ${props => {console.log(props.sortedRows, 'test')}};
 `;
 
 class HeaderCell extends Component {
