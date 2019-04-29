@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { selectColumn, sortRows } from '../../action-creators';
 import { connect } from 'react-redux';
 import { INCREASE, DECREASE } from '../../constants';
-import { sortOrder, filteredRows } from '../../selectors';
+import { sortOrder, filteredRows, columnName } from '../../selectors';
 
 
 
@@ -24,18 +24,31 @@ const Conteiner = styled.div`
         opacity: 0.5;
     }
 
-    background-color: ${props => {console.log(props.sortedRows, 'test')}};
+    background-color: ${props => {
+        if (props.data === props.columnName && props.sort === INCREASE) {
+            return 'green'
+        } else if (props.data === props.columnName && props.sort === DECREASE) {
+            return 'red'
+        } else {
+            return 'none'
+        }
+    }
+    };
 `;
 
 class HeaderCell extends Component {
 
     render() {
 
-        const { data } = this.props;
+        const { data, sortOrder, columnName } = this.props;
 
         return (
             <Conteiner
                 onClick={this.onHandleClickSort}
+                sort={sortOrder}
+                data={data[0]}
+                columnName={columnName}
+
             >
                 {data[0]}
             </Conteiner>
@@ -58,6 +71,7 @@ export default connect(
     (store) => ({
         sortOrder: sortOrder(store),
         sortedRows: filteredRows(store),
+        columnName: columnName(store)
     }),
     { selectColumn, sortRows }
 )(HeaderCell);
