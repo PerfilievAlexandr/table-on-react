@@ -18,12 +18,13 @@ class Column extends Component {
 
         const { columnName, columnData, keyForColumn, idForColumn, index } = this.props;
 
-        const data = columnData.map((item, index) => (
-            <Cell
+        const data = columnData.map((item, index) => {
+            return <Cell
                 data={item}
                 key={index}
+                index={index}
             />
-        ));
+        });
 
         return (
             <Draggable key={keyForColumn} draggableId={idForColumn} index={index}>
@@ -41,8 +42,7 @@ class Column extends Component {
                 )}
             </Draggable>
         )
-    }
-
+    };
 }
 
 

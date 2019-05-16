@@ -22,8 +22,6 @@ const TableArea = styled.div`
     border: 1px solid #777777;
     border-collapse: collapse;
     background-color: white;
-
-    color: #777777;
 `;
 
 class Table extends Component {
@@ -32,10 +30,12 @@ class Table extends Component {
 
         const { data, loading, columnsName } = this.props;
 
+        
+
         const columns = columnsName
             ?
             columnsName.map((column, index) => {
-                const columnData = data.map((item) => item[index])
+                const columnData = data.map((item) => item[index]);
                 return (
                     <Column
                         key={index}

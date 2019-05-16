@@ -12,6 +12,8 @@ export const searchValue = (state) => state.search;
 
 export const columnNames = (state) => state.rows.columns;
 
+export const rowIndex = (state) => state.rows.rowOnHover;
+
 export const allRows = createSelector(allRowsObj, (row) => row ? Object.values(row) : null);
 
 export const arrColumnNames = createSelector(columnNames, (column) => {

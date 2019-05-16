@@ -5,6 +5,8 @@ import {
     START,
     SUCCESS,
     DRAGG_COLUMN,
+    HOVER_ROW,
+    LEAVE_HOVER_ROW
 } from '../constants';
 
 const initialState = {
@@ -16,6 +18,7 @@ const initialState = {
         columnName: ''
     },
     columns: null,
+    rowOnHover: null
 };
 
 export default (rows = initialState, action) => {
@@ -73,6 +76,21 @@ export default (rows = initialState, action) => {
                 rowsList: payload.newData,
                 columns: payload.columns
             };
+
+        case HOVER_ROW: 
+            return {
+                ...rows,
+                rowOnHover: payload
+
+        };
+        
+        case LEAVE_HOVER_ROW: 
+        return {
+            ...rows,
+            rowOnHover: null
+
+        };
+
         default:
             return rows
     }

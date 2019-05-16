@@ -15,3 +15,7 @@ export const INCREASE = 'INCREASE';
 export const SEARCH = 'SEARCH';
 
 export const DRAGG_COLUMN = 'DRAGG_COLUMN';
+
+export const HOVER_ROW = 'HOVER_ROW';
+
+export const LEAVE_HOVER_ROW = 'LEAVE_HOVER_ROW';

@@ -6,7 +6,9 @@ import {
     SEARCH,
     START,
     SUCCESS,
-    DRAGG_COLUMN
+    DRAGG_COLUMN,
+    HOVER_ROW,
+    LEAVE_HOVER_ROW
 } from '../constants';
 
 export function getData() {
@@ -62,6 +64,20 @@ export function dragColumn(columns, newData) {
             columns,
             newData
         }
+    }
+}
+
+
+export function hoverRow(index) {
+    return {
+        type: HOVER_ROW,
+        payload: index
+    }
+}
+
+export function leaveHoverRow() {
+    return {
+        type: HOVER_ROW
     }
 }
 
