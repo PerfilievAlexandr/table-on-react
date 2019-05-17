@@ -6,6 +6,7 @@ import Column from '../column';
 import Loader from '../loader';
 import styled from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import Form from '../form';
 
 const Conteiner = styled.section`
       padding-top: 50px;
@@ -31,6 +32,7 @@ class Table extends Component {
         const { data, loading, columnsName } = this.props;
 
         
+        const idRows = data.map((item) => item[0]);
 
         const columns = columnsName
             ?
@@ -45,6 +47,7 @@ class Table extends Component {
                         idForColumn={index.toString()}
                         keyForColumn={index}
                         onClick={this.onHandleClickSort}
+                        idRows={idRows}
                     />
                 )
             })
@@ -55,6 +58,7 @@ class Table extends Component {
 
         return (
             <Conteiner>
+                <Form/>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <Droppable droppableId='droppableId' direction='horizontal'>
                         {(provided) => (

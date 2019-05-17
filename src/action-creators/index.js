@@ -8,7 +8,10 @@ import {
     SUCCESS,
     DRAGG_COLUMN,
     HOVER_ROW,
-    LEAVE_HOVER_ROW
+    LEAVE_HOVER_ROW,
+    SELECT_ROW,
+    TOGGLE_OPEN_FORM,
+    REFACT_ROW
 } from '../constants';
 
 export function getData() {
@@ -77,7 +80,31 @@ export function hoverRow(index) {
 
 export function leaveHoverRow() {
     return {
-        type: HOVER_ROW
+        type: LEAVE_HOVER_ROW
+    }
+}
+
+export function selectRow(id) {
+    return {
+        type: SELECT_ROW,
+        payload: id
+    }
+}
+
+export function closeForm() {
+    return {
+        type: TOGGLE_OPEN_FORM
+    }
+}
+
+export function refactRow(data) {
+    const id = store.getState().rows.row.id;
+    return {
+        type: REFACT_ROW,
+        payload: {
+            data: data,
+            id: id 
+        }
     }
 }
 

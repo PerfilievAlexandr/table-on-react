@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import {hoverRow, leaveHoverRow} from '../../action-creators'
+import {hoverRow, leaveHoverRow, selectRow} from '../../action-creators'
 import { rowIndex } from '../../selectors';
 
 
@@ -21,6 +21,7 @@ class Cell extends Component {
             index={index}
             indexOfRow={indexOfRow}
             onMouseLeave={this.onMouseLeaveCell}
+            onClick={this.onHandleClick}
         >{data}</Conteiner>
     };
 
@@ -33,11 +34,16 @@ class Cell extends Component {
         const {leaveHoverRow} = this.props;
         leaveHoverRow()
     }
+
+    onHandleClick = () => {
+        const {indexOfRow, idRows, selectRow} = this.props;
+        selectRow(idRows[indexOfRow])
+    }
 }
 
 
 export default connect((store) => ({
     indexOfRow: rowIndex(store)
 }),
-    {hoverRow, leaveHoverRow}
+    {hoverRow, leaveHoverRow, selectRow}
 )(Cell);

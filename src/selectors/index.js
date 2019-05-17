@@ -12,7 +12,9 @@ export const searchValue = (state) => state.search;
 
 export const columnNames = (state) => state.rows.columns;
 
-export const rowIndex = (state) => state.rows.rowOnHover;
+export const rowIndex = (state) => state.rows.row.rowOnHover;
+
+export const openForm = (state) => state.rows.row.openForm;
 
 export const allRows = createSelector(allRowsObj, (row) => row ? Object.values(row) : null);
 

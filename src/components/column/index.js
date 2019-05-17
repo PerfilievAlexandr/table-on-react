@@ -16,13 +16,14 @@ class Column extends Component {
 
     render() {
 
-        const { columnName, columnData, keyForColumn, idForColumn, index } = this.props;
-
+        const { columnName, columnData, keyForColumn, idForColumn, index, idRows } = this.props;
         const data = columnData.map((item, index) => {
             return <Cell
                 data={item}
                 key={index}
                 index={index}
+                columnName={columnName}
+                idRows={idRows}
             />
         });
 

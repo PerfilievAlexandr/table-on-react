@@ -6,7 +6,10 @@ import {
     SUCCESS,
     DRAGG_COLUMN,
     HOVER_ROW,
-    LEAVE_HOVER_ROW
+    LEAVE_HOVER_ROW,
+    SELECT_ROW,
+    TOGGLE_OPEN_FORM,
+    REFACT_ROW
 } from '../constants';
 
 const initialState = {
@@ -18,7 +21,11 @@ const initialState = {
         columnName: ''
     },
     columns: null,
-    rowOnHover: null
+    row: {
+        rowOnHover: null,
+        id: null,
+        openForm: false
+    }
 };
 
 export default (rows = initialState, action) => {
@@ -80,15 +87,53 @@ export default (rows = initialState, action) => {
         case HOVER_ROW: 
             return {
                 ...rows,
-                rowOnHover: payload
-
+                row: {
+                    ...rows.row,
+                    rowOnHover: payload
+                }
         };
         
         case LEAVE_HOVER_ROW: 
         return {
             ...rows,
-            rowOnHover: null
+            row: {
+                ...rows.row,
+                rowOnHover: null
+            }
+        };
 
+        case SELECT_ROW: 
+        return {
+            ...rows,
+            row: {
+                ...rows.row,
+                id: payload,
+                openForm: true
+            }
+        };
+
+        case TOGGLE_OPEN_FORM: 
+        return {
+            ...rows,
+            row: {
+                ...rows.row,
+                openForm: false
+            }
+        };
+
+        case REFACT_ROW: 
+        return {
+            ...rows,
+            rowsList: {
+                ...rows.rowsList,
+                [payload.id]: {
+                    id: payload.id, firstName: payload.data.firstName, lastName: payload.data.lastName, email: payload.data.email, phone: payload.data.phone
+                }
+            },
+            row: {
+                ...rows.row,
+                openForm: false
+            }
         };
 
         default:
